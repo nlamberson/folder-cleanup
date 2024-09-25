@@ -3,14 +3,16 @@ import re
 
 class AutoSpacer:
     def addSpacesToString(filename: str) -> str:
-        return re.sub(r"(?<=\w)([A-Z])", r" \1", filename)
+        splitFilename = os.path.splitext(filename)
+        # Regex split the filename itself then add the extension back onto it
+        return re.sub(r"(?<=\w)([A-Z0-9])", r" \1", splitFilename[0]) + splitFilename[1]
     
 def main():
     folderPath = os.getcwd() + "/"
     for filename in os.listdir(folderPath):
         if filename == "main.py":
             print("Ignoring python script file.")
-            return
+            continue
         newFileName = AutoSpacer.addSpacesToString(filename)
         os.rename(folderPath+filename, folderPath+newFileName)
         print("Renamed file: \"" + filename + "\" to: \"" + newFileName + "\"")

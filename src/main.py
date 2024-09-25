@@ -4,6 +4,10 @@ import re
 class AutoSpacer:
     def addSpacesToString(filename: str) -> str:
         splitFilename = os.path.splitext(filename)
+
+        # Remove any underscores used for spaces
+        splitFilename[0].replace("_", "")
+
         # Regex split the filename itself then add the extension back onto it
         return re.sub(r"(?<=\w)([A-Z0-9])", r" \1", splitFilename[0]) + splitFilename[1]
     
